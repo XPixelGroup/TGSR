@@ -1,0 +1,121 @@
+name: ICLR_TGSR_Real_HAT_GAN_TG_SRx4_DIV2KG5
+model_type: HATModel
+scale: 4
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 0
+
+tile:
+  tile_size: 512 # max patch size for the tile mode
+  tile_pad: 32
+  
+datasets:
+  test_0:
+    name: DIV2K_G0
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group0
+    io_backend:
+      type: disk
+  test_1:  # the 1st test dataset
+    name: DIV2K_G1
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group1
+    io_backend:
+      type: disk
+
+  test_2:
+    name: DIV2K_G2
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group2
+    io_backend:
+      type: disk
+  test_3:  # the 1st test dataset
+    name: DIV2K_G3
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group3
+    io_backend:
+      type: disk
+  test_4:
+    name: DIV2K_G4
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group4
+    io_backend:
+      type: disk
+
+  test_5: 
+    name: DIV2K_RealESRGAN_random_4
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/datasets/VAL/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/datasets/val/DIV2K_val_RealESRGAN_random/random_4
+    io_backend:
+      type: disk
+  test_6:  # the 1st test dataset
+    name: AIM2019_val
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/datasets/VAL/DIV2K_VAL/DIV2K_valid_HR
+    dataroot_lq: /nvme/zhangwenlong/project/datasets/val/AIM9_valid_DIV2K
+    io_backend:
+      type: disk
+  test_7:
+    name: RealSRSet_version3_NikonTest
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/datasets/val/RealSRSet_version2/Nikon/Test/HR_x4
+    dataroot_lq: /nvme/zhangwenlong/project/datasets/val/RealSRSet_version2/Nikon/Test/LR_x4_bic/x4
+    io_backend:
+      type: disk
+  test_8:  # the 1st test dataset
+    name: RealSRSet_version3_CanoTest
+    type: PairedImageDataset_mybasicsr
+    dataroot_gt: /nvme/zhangwenlong/project/datasets/val/RealSR(V3)/Canon/Test/HR_x4
+    dataroot_lq: /nvme/zhangwenlong/project/datasets/val/RealSR(V3)/Canon/Test/LR_x4
+    io_backend:
+      type: disk
+
+
+
+# network structures
+network_g:
+  type: HAT_mybasicsr
+  upscale: 4
+  in_chans: 3
+  img_size: 64
+  window_size: 16
+  compress_ratio: 3
+  squeeze_factor: 30
+  conv_scale: 0.01
+  overlap_ratio: 0.5
+  img_range: 1.
+  depths: [6, 6, 6, 6, 6, 6]
+  embed_dim: 180
+  num_heads: [6, 6, 6, 6, 6, 6]
+  mlp_ratio: 2
+  upsampler: 'pixelshuffle'
+  resi_connection: '1conv'
+
+
+# path
+path:
+  pretrain_network_g: /mnt/petrelfs/zhangwenlong/project_llv/TGSR/experiments/pretrained_models/RealHATGAN-TG.pth
+  strict_load_g: true
+  param_key_g: 'params_ema'
+
+# validation settings
+val:
+  save_img: true
+  suffix: ~  # add suffix to saved images, if None, use exp name
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: true
+      better: higher  # the higher, the better. Default: higher
+    lpips:
+      type: calculate_lpips
+      crop_border: 4
+      test_y_channel: true
+      better: lower
