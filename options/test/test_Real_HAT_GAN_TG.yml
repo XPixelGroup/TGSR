@@ -11,9 +11,9 @@ tile:
 datasets:
   test_0:
     name: DIV2K_G0
-    type: PairedImageDataset_mybasicsr
-    dataroot_gt: /nvme/zhangwenlong/project/myBasicSR/datasets/val/DIV2K_VAL/DIV2K_valid_HR
-    dataroot_lq: /nvme/zhangwenlong/project/myBasicSR/datasets/TGSR/valid/DIV2K_val_d4000_distri_group5/group0
+    type: PairedImageDataset
+    dataroot_gt: /mnt/petrelfs/zhangwenlong/datasets/val/DIV2K_valid_HR
+    dataroot_lq: /mnt/petrelfs/zhangwenlong/datasets/val/DIV2K_type1
     io_backend:
       type: disk
   # test_1:  # the 1st test dataset

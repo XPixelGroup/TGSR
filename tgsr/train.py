@@ -1,9 +1,9 @@
 # flake8: noqa
 import os.path as osp
 
-import private.archs
-import private.data
-import private.models
+import tgsr.archs
+import tgsr.data
+import tgsr.models
 from basicsr.train import train_pipeline
 
 if __name__ == '__main__':

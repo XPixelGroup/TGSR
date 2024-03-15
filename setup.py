@@ -82,15 +82,15 @@ def get_requirements(filename='requirements.txt'):
 if __name__ == '__main__':
     write_version_py()
     setup(
-        name='basicsr',
+        name='tgsr',
         version=get_version(),
-        description='BasicSR Examples',
+        description='TGSR',
         long_description=readme(),
         long_description_content_type='text/markdown',
-        author='Xintao Wang',
-        author_email='xintao.wang@outlook.com',
+        author='Wenlong Zhang',
+        author_email='zhangwenlong@pjlab.org.cn',
         keywords='computer vision, pytorch, basicsr, image restoration, super-resolution',
-        url='https://github.com/WenlongZhang0517/bsre',
+        url='https://github.com/XPixelGroup/TGSR.git',
         include_package_data=True,
         packages=find_packages(exclude=('options', 'datasets', 'experiments', 'results', 'tb_logger', 'wandb')),
         classifiers=[

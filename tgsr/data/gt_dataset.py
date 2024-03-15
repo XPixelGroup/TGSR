@@ -14,7 +14,7 @@ from basicsr.utils import FileClient, get_root_logger, imfrombytes, img2tensor
 from basicsr.utils.registry import DATASET_REGISTRY
 
 
-@DATASET_REGISTRY.register(suffix='basicsr')
+@DATASET_REGISTRY.register()
 class GTDataset(data.Dataset):
     """Dataset used for Real-ESRGAN model:
     Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data.
