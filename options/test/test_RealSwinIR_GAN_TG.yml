@@ -1,4 +1,4 @@
-name: TGSR_Real_HAT_GAN_TG_SRx4_DIV2KG5
+name: TGSR_Real_SwinIR_GAN_TG_SRx4_DIV2KG5
 model_type: HATModel
 scale: 4
 num_gpu: 1  # set num_gpu: 0 for cpu mode
@@ -77,27 +77,23 @@ datasets:
 
 # network structures
 network_g:
-  type: HAT
+  type: SwinIR
   upscale: 4
   in_chans: 3
   img_size: 64
-  window_size: 16
-  compress_ratio: 3
-  squeeze_factor: 30
-  conv_scale: 0.01
-  overlap_ratio: 0.5
+  window_size: 8
   img_range: 1.
-  depths: [6, 6, 6, 6, 6, 6]
-  embed_dim: 180
-  num_heads: [6, 6, 6, 6, 6, 6]
+  depths: [6, 6, 6, 6, 6, 6, 6, 6, 6]
+  embed_dim: 240
+  num_heads: [8, 8, 8, 8, 8, 8, 8, 8, 8]
   mlp_ratio: 2
-  upsampler: 'pixelshuffle'
-  resi_connection: '1conv'
+  upsampler: 'nearest+conv'
+  resi_connection: '3conv'
 
 
 # path
 path:
-  pretrain_network_g: /mnt/petrelfs/zhangwenlong/project_llv/TGSR/experiments/pretrained_models/RealHATGAN-TG.pth
+  pretrain_network_g: xx/RealSwinIRGAN-TG.pth
   strict_load_g: true
   param_key_g: 'params_ema'
 
