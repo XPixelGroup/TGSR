@@ -1,6 +1,7 @@
 # flake8: noqa
 import os.path as osp
 
+import tgsr.metrics
 import tgsr.archs
 import tgsr.data
 import tgsr.models
